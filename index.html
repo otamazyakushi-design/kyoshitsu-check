@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教室運営チェックシート</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #d4607a;
+  --pink-light: #fdf0f4;
+  --pink-mid: #f0c4d0;
+  --pink-dark: #a84060;
+  --cream: #fdf8f5;
+  --text: #3a2830;
+  --text-sub: #9a7080;
+  --border: #edd8e0;
+  --shadow: 0 2px 18px rgba(180,80,110,0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  background: linear-gradient(160deg, #fdf0f4 0%, #fdf8f5 60%, #f5f0f8 100%);
+  min-height: 100vh;
+  color: var(--text);
+}
+.page { max-width: 600px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+
+.header { text-align: center; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
+.badge {
+  display: inline-block; background: var(--pink); color: white;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  padding: 4px 16px; border-radius: 99px; margin-bottom: 12px;
+}
+.header h1 { font-size: 21px; font-weight: 700; line-height: 1.55; margin-bottom: 6px; }
+.header h1 em { color: var(--pink); font-style: normal; }
+.header p { font-size: 13px; color: var(--text-sub); }
+
+.counter-bar {
+  background: white; border: 1.5px solid var(--pink-mid); border-radius: 16px;
+  padding: 11px 18px; display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.08s ease both;
+}
+.counter-bar span { font-size: 13px; color: var(--text-sub); white-space: nowrap; }
+.prog-bg { flex: 1; height: 8px; background: #fce8f0; border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--pink-mid), var(--pink)); border-radius: 99px; width: 0%; transition: width 0.3s ease; }
+.counter-num { font-size: 26px; font-weight: 700; color: var(--pink); line-height: 1; white-space: nowrap; }
+.counter-num small { font-size: 13px; font-weight: 400; color: var(--text-sub); }
+
+.sec {
+  background: white; border-radius: 20px; border: 1px solid var(--border);
+  margin-bottom: 1rem; overflow: hidden; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+.sec:nth-child(3) { animation-delay: 0.12s; }
+.sec:nth-child(4) { animation-delay: 0.18s; }
+.sec:nth-child(5) { animation-delay: 0.24s; }
+.sec:nth-child(6) { animation-delay: 0.30s; }
+.sec-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 18px; background: var(--pink-light);
+  border-bottom: 1px solid var(--border);
+}
+.sec-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--pink); color: white;
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.sec-title { font-size: 14px; font-weight: 700; color: var(--pink-dark); }
+label.item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 18px; cursor: pointer; transition: background 0.15s;
+  border-bottom: 1px solid #faf0f3;
+}
+label.item:last-child { border-bottom: none; }
+label.item:hover { background: #fdf5f7; }
+label.item input { display: none; }
+.box {
+  width: 20px; height: 20px; border-radius: 6px;
+  border: 2px solid var(--pink-mid); background: white;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; transition: all 0.18s;
+}
+.box svg { display: none; }
+label.item input:checked ~ .box { background: var(--pink); border-color: var(--pink); }
+label.item input:checked ~ .box svg { display: block; }
+label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
+.txt { font-size: 13.5px; line-height: 1.75; color: var(--text); transition: color 0.18s; }
+
+.submit-wrap { text-align: center; margin-top: 1.75rem; animation: fadeUp 0.6s 0.38s ease both; }
+.submit-btn {
+  background: var(--pink); color: white; font-family: inherit;
+  font-size: 16px; font-weight: 700; padding: 15px 52px;
+  border-radius: 99px; border: none; cursor: pointer;
+  box-shadow: 0 4px 22px rgba(212,96,122,0.35);
+  transition: transform 0.15s, box-shadow 0.15s; letter-spacing: 0.04em;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(212,96,122,0.42); }
+.submit-btn:active { transform: scale(0.97); }
+
+#result { display: none; }
+#result.show { display: block; animation: fadeUp 0.65s ease both; }
+
+.result-top {
+  background: white; border-radius: 24px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 2rem 1.5rem 1.75rem;
+  text-align: center; margin-bottom: 1rem;
+}
+.fig {
+  width: 180px; height: 180px; margin: 0 auto 1.25rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.fig img { width: 100%; height: 100%; object-fit: contain; }
+.score-pill {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  background: var(--pink-light); border-radius: 99px;
+  padding: 6px 22px; margin-bottom: 10px;
+}
+.score-big { font-size: 38px; font-weight: 700; color: var(--pink); line-height: 1; }
+.score-small { font-size: 15px; color: var(--text-sub); }
+.level-badge {
+  display: inline-block; background: var(--pink); color: white;
+  font-size: 12px; font-weight: 700; padding: 4px 18px;
+  border-radius: 99px; margin-bottom: 10px;
+}
+.r-title { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+.r-msg { font-size: 13.5px; color: var(--text-sub); line-height: 2; white-space: pre-line; }
+
+.cats {
+  background: white; border-radius: 20px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+}
+.cats h3 { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 1rem; letter-spacing: 0.05em; }
+.cat { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.cat:last-child { margin-bottom: 0; }
+.cat-lbl { font-size: 12px; color: var(--text-sub); width: 115px; flex-shrink: 0; }
+.cat-bg { flex: 1; height: 10px; background: #fce8f0; border-radius: 99px; overflow: hidden; }
+.cat-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--pink-mid), var(--pink)); transition: width 0.8s cubic-bezier(.4,0,.2,1); width: 0%; }
+.cat-cnt { font-size: 12px; font-weight: 700; color: var(--pink); width: 30px; text-align: right; flex-shrink: 0; }
+
+.cta-wrap {
+  background: white; border-radius: 20px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.5rem 1.5rem 1.75rem; margin-bottom: 1rem;
+}
+.cta-wrap h3 { font-size: 15px; font-weight: 700; color: var(--text); text-align: center; margin-bottom: 6px; }
+.cta-lead { font-size: 13px; color: var(--text-sub); text-align: center; margin-bottom: 1.25rem; line-height: 1.9; white-space: pre-line; }
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cta-card {
+  border-radius: 16px; padding: 1.2rem 1rem 1.3rem;
+  text-align: center; text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s; display: block;
+}
+.cta-card:hover { transform: translateY(-3px); }
+.cta-card.outline {
+  background: var(--pink-light); border: 1.5px solid var(--pink-mid);
+}
+.cta-card.fill {
+  background: var(--pink); border: 1.5px solid var(--pink);
+  box-shadow: 0 4px 18px rgba(212,96,122,0.3);
+}
+.cta-card.fill:hover { box-shadow: 0 6px 24px rgba(212,96,122,0.42); }
+.cta-icon { font-size: 30px; margin-bottom: 8px; display: block; }
+.cta-label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.5; }
+.cta-card.outline .cta-label { color: var(--pink-dark); }
+.cta-card.fill .cta-label { color: white; }
+.cta-desc { font-size: 11px; line-height: 1.8; display: block; margin-bottom: 10px; }
+.cta-card.outline .cta-desc { color: var(--text-sub); }
+.cta-card.fill .cta-desc { color: rgba(255,255,255,0.85); }
+.cta-btn-inner {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 6px 14px; border-radius: 99px;
+}
+.cta-card.outline .cta-btn-inner { background: var(--pink); color: white; }
+.cta-card.fill .cta-btn-inner { background: white; color: var(--pink); }
+
+.kooza-img-wrap {
+  background: white; border-radius: 20px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 1rem;
+}
+.kooza-img-wrap img {
+  width: 100%; display: block;
+}
+.kooza-img-caption {
+  padding: 10px 16px; font-size: 12px; color: var(--text-sub);
+  text-align: center; border-top: 1px solid var(--border);
+  background: var(--pink-light);
+}
+.reset-btn {
+  display: block; width: 100%; background: white;
+  color: var(--text-sub); font-family: inherit; font-size: 13px;
+  padding: 11px; border-radius: 12px; border: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s; margin-top: 0.5rem;
+}
+.reset-btn:hover { background: var(--pink-light); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div id="form">
+  <div class="header">
+    <div class="badge">教室運営チェックシート</div>
+    <h1>このまま続ける？<br><em>それとも整える？</em></h1>
+    <p>当てはまると思う項目に✓を入れてみてください</p>
+  </div>
+
+  <div class="counter-bar">
+    <span>チェック数</span>
+    <div class="prog-bg"><div class="prog-fill" id="prog"></div></div>
+    <div class="counter-num"><span id="cnt">0</span><small> / 16</small></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">今の体力・気力</div></div>
+    <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">レッスン前日に「明日か…」とため息が出ることがある</span></label>
+    <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">体調が悪くても「自分がやらないと」と休めない</span></label>
+    <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">繁忙期が終わっても、疲れが抜けない感覚がある</span></label>
+    <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「このペースであと5年続けられるか」正直自信がない</span></label>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">生徒が増えているのに楽にならない</div></div>
+    <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">生徒数は増えたのに、手元に残るお金の感覚がない</span></label>
+    <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">増やすたびに「やること」も増えて、負担は減っていない</span></label>
+    <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">このまま倍になった姿を想像すると、正直ぞっとする</span></label>
+    <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「頑張れば回る」が続いているだけで、余裕が生まれていない</span></label>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">止まっているポイント</div></div>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「変えなきゃ」と思いながら、何から手をつければいいか分からない</span></label>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">誰かに相談したいけど、教室経営を分かってくれる人が周りにいない</span></label>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「まだ大丈夫」と思いながら、気づけば1年が過ぎていた</span></label>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">自分で考えて、調べて、結局そのまま…を繰り返している</span></label>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">これからへの不安</div></div>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">人に任せたいけど「どうせ自分がやった方が早い」と思ってしまう</span></label>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">拡大・採用・テナントを考えたことはあるが、判断できずにいる</span></label>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">半年後・1年後の自分の働き方が、具体的にイメージできない</span></label>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">家族との時間や自分の余裕を、ずっと「後回し」にしてきた</span></label>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="showResult()">✨ 診断結果を見る</button>
+  </div>
+</div>
+
+<div id="result">
+  <div class="header">
+    <div class="badge">診断結果</div>
+    <h1>あなたの教室の<br><em>今の状態</em></h1>
+  </div>
+
+  <div class="result-top">
+    <div class="fig" id="r-fig"></div>
+    <div class="score-pill">
+      <span class="score-big" id="r-score">0</span>
+      <span class="score-small">/ 16</span>
+    </div>
+    <div><span class="level-badge" id="r-level"></span></div>
+    <div class="r-title" id="r-title"></div>
+    <div class="r-msg" id="r-msg"></div>
+  </div>
+
+  <div class="cats">
+    <h3>カテゴリ別チェック数</h3>
+    <div class="cat"><span class="cat-lbl">今の体力・気力</span><div class="cat-bg"><div class="cat-fill" id="b0"></div></div><span class="cat-cnt" id="c0"></span></div>
+    <div class="cat"><span class="cat-lbl">楽にならない</span><div class="cat-bg"><div class="cat-fill" id="b1"></div></div><span class="cat-cnt" id="c1"></span></div>
+    <div class="cat"><span class="cat-lbl">止まっているポイント</span><div class="cat-bg"><div class="cat-fill" id="b2"></div></div><span class="cat-cnt" id="c2"></span></div>
+    <div class="cat"><span class="cat-lbl">これからへの不安</span><div class="cat-bg"><div class="cat-fill" id="b3"></div></div><span class="cat-cnt" id="c3"></span></div>
+  </div>
+
+  <div class="kooza-img-wrap">
+    <img src="講座案内.jpg" alt="教室のこれからを考える整理講座 案内">
+    <div class="kooza-img-caption">📖 講座の詳細はこちら（画像をタップで拡大できます）</div>
+  </div>
+
+  <div class="cta-wrap">
+    <h3>どちらから始めますか？</h3>
+    <p class="cta-lead" id="r-cta-lead"></p>
+    <div class="cta-grid">
+      <a href="https://lin.ee/rxtxCmE" class="cta-card outline">
+        <span class="cta-icon">📖</span>
+        <span class="cta-label">見直し講座へ<br>申込む</span>
+        <span class="cta-desc">まず現状を整理したい方へ。無理に決断しなくていい90分。</span>
+        <span class="cta-btn-inner">LINEで申込む →</span>
+      </a>
+      <a href="https://lin.ee/rxtxCmE" class="cta-card fill">
+        <span class="cta-icon">🤝</span>
+        <span class="cta-label">個別相談へ<br>申込む</span>
+        <span class="cta-desc">一緒に走り出したい方へ。伴走型コンサルのご相談。</span>
+        <span class="cta-btn-inner">LINEで申込む →</span>
+      </a>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetForm()">🔄 もう一度チェックする</button>
+</div>
+
+</div>
+
+<script>
+const DATA = [
+  {
+    min: 0, max: 4, img: 'lv1.png', level: '✨ 安定期',
+    title: '今は比較的余裕があります',
+    msg: '今のところ大きな無理はなさそうです。\n余裕があるうちに少しずつ仕組みを整えておくのが\n長く続く教室の秘訣。\n今が「整えどき」を先取りするチャンスです。',
+    lead: '余裕があるうちに動ける今がチャンスです。\nまず現状を整理したい方は見直し講座から、\nもう一緒に走り出したい方は個別相談へどうぞ。'
+  },
+  {
+    min: 5, max: 8, img: 'lv2.png', level: '⚠️ 要注意',
+    title: 'そろそろ整えどきかもしれません',
+    msg: 'じわじわと負担が積み重なっているサインです。\n「まだ大丈夫」と思いながら\n気づけば限界になることもあります。\nモヤモヤが出てきた今が、動くタイミングです。',
+    lead: '「変えなきゃとは思ってるけど、何から？」\nそのモヤモヤを整理したい方は見直し講座から。\n動き出す覚悟ができている方は個別相談へどうぞ。'
+  },
+  {
+    min: 9, max: 12, img: 'lv3.png', level: '🔴 要整理',
+    title: 'かなり無理をしています',
+    msg: '体力も気力も、じわじわと削られている状態です。\nこのまま続けても楽にはなりません。\n今こそ一度立ち止まって\n教室の状態を整理することが必要なタイミングです。',
+    lead: '一人で抱えなくていいんです。\nまず現状を整理したい方は見直し講座から、\nすぐに伴走してほしい方は個別相談へどうぞ。'
+  },
+  {
+    min: 13, max: 16, img: 'lv4.png', level: '🆘 緊急サポート必要',
+    title: '今すぐ助けが必要です',
+    msg: '限界に近い状態かもしれません。\nあなたが倒れてしまったら、生徒も困ります。\n自分を守ることも、大切な仕事のひとつです。\nどうか一人で抱え込まないでください。',
+    lead: '今が動くタイミングです。\n一緒に走り出したい方は個別相談へ、\nまずは話を整理したい方は見直し講座からどうぞ。'
+  }
+];
+
+document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const n = document.querySelectorAll('input[type=checkbox]:checked').length;
+    document.getElementById('cnt').textContent = n;
+    document.getElementById('prog').style.width = (n / 16 * 100) + '%';
+  });
+});
+
+function showResult() {
+  const cbs = document.querySelectorAll('input[type=checkbox]');
+  const total = [...cbs].filter(c => c.checked).length;
+  const sec = [0, 0, 0, 0];
+  cbs.forEach(c => { if (c.checked) sec[+c.dataset.s]++; });
+  const d = DATA.find(x => total >= x.min && total <= x.max);
+
+  document.getElementById('r-score').textContent = total;
+  document.getElementById('r-level').textContent = d.level;
+  document.getElementById('r-title').textContent = d.title;
+  document.getElementById('r-msg').textContent = d.msg;
+  document.getElementById('r-cta-lead').textContent = d.lead;
+  document.getElementById('r-fig').innerHTML = `<img src="${d.img}" alt="${d.level}">`;
+
+  sec.forEach((v, i) => {
+    document.getElementById('b' + i).style.width = (v / 4 * 100) + '%';
+    document.getElementById('c' + i).textContent = v + '/4';
+  });
+
+  document.getElementById('form').style.display = 'none';
+  const r = document.getElementById('result');
+  r.style.display = 'block';
+  setTimeout(() => r.classList.add('show'), 10);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
+  document.getElementById('cnt').textContent = '0';
+  document.getElementById('prog').style.width = '0%';
+  const r = document.getElementById('result');
+  r.style.display = 'none';
+  r.classList.remove('show');
+  document.getElementById('form').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
