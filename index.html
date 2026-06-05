@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>教室運営チェックシート</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root {
   --pink: #d4607a;
@@ -139,53 +140,51 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
 .cat-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--pink-mid), var(--pink)); transition: width 0.8s cubic-bezier(.4,0,.2,1); width: 0%; }
 .cat-cnt { font-size: 12px; font-weight: 700; color: var(--pink); width: 30px; text-align: right; flex-shrink: 0; }
 
+/* 詰まりポイント */
+.bottleneck {
+  background: var(--pink-light); border-radius: 16px;
+  border: 1px solid var(--border); border-left: 4px solid var(--pink);
+  padding: 1.25rem 1.5rem; margin-top: 1rem; display: none;
+}
+.bottleneck-title {
+  font-size: 13px; font-weight: 700; color: var(--pink-dark); margin-bottom: 8px;
+}
+.bottleneck-msg {
+  font-size: 13px; color: var(--text-sub); line-height: 2;
+}
+
+/* CTA */
 .cta-wrap {
   background: white; border-radius: 20px; border: 1px solid var(--border);
   box-shadow: var(--shadow); padding: 1.5rem 1.5rem 1.75rem; margin-bottom: 1rem;
 }
-.cta-wrap h3 { font-size: 15px; font-weight: 700; color: var(--text); text-align: center; margin-bottom: 6px; }
-.cta-lead { font-size: 13px; color: var(--text-sub); text-align: center; margin-bottom: 1.25rem; line-height: 1.9; white-space: pre-line; }
-.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.cta-card {
-  border-radius: 16px; padding: 1.2rem 1rem 1.3rem;
-  text-align: center; text-decoration: none;
-  transition: transform 0.15s, box-shadow 0.15s; display: block;
+.cta-wrap h3 { font-size: 17px; font-weight: 700; color: var(--text); text-align: center; margin-bottom: 8px; }
+.cta-lead { font-size: 13px; color: var(--text-sub); text-align: center; margin-bottom: 1.5rem; line-height: 1.9; white-space: pre-line; }
+.purchase-btn {
+  display: block; width: 100%; background: var(--pink); color: white;
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  padding: 16px 24px; border-radius: 99px; text-decoration: none;
+  text-align: center; box-shadow: 0 4px 22px rgba(212,96,122,0.35);
+  transition: transform 0.15s, box-shadow 0.15s; margin-bottom: 10px;
+  letter-spacing: 0.03em;
 }
-.cta-card:hover { transform: translateY(-3px); }
-.cta-card.outline {
-  background: var(--pink-light); border: 1.5px solid var(--pink-mid);
+.purchase-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(212,96,122,0.42); }
+.purchase-btn:active { transform: scale(0.97); }
+.purchase-note {
+  font-size: 11px; color: var(--text-sub); text-align: center; line-height: 1.8;
 }
-.cta-card.fill {
-  background: var(--pink); border: 1.5px solid var(--pink);
-  box-shadow: 0 4px 18px rgba(212,96,122,0.3);
-}
-.cta-card.fill:hover { box-shadow: 0 6px 24px rgba(212,96,122,0.42); }
-.cta-icon { font-size: 30px; margin-bottom: 8px; display: block; }
-.cta-label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.5; }
-.cta-card.outline .cta-label { color: var(--pink-dark); }
-.cta-card.fill .cta-label { color: white; }
-.cta-desc { font-size: 11px; line-height: 1.8; display: block; margin-bottom: 10px; }
-.cta-card.outline .cta-desc { color: var(--text-sub); }
-.cta-card.fill .cta-desc { color: rgba(255,255,255,0.85); }
-.cta-btn-inner {
-  display: inline-block; font-size: 11px; font-weight: 700;
-  padding: 6px 14px; border-radius: 99px;
-}
-.cta-card.outline .cta-btn-inner { background: var(--pink); color: white; }
-.cta-card.fill .cta-btn-inner { background: white; color: var(--pink); }
 
 .kooza-img-wrap {
   background: white; border-radius: 20px; border: 1px solid var(--border);
   box-shadow: var(--shadow); overflow: hidden; margin-bottom: 1rem;
 }
-.kooza-img-wrap img {
-  width: 100%; display: block;
-}
+.kooza-img-wrap img { width: 100%; display: block; }
 .kooza-img-caption {
   padding: 10px 16px; font-size: 12px; color: var(--text-sub);
   text-align: center; border-top: 1px solid var(--border);
   background: var(--pink-light);
 }
+
 .reset-btn {
   display: block; width: 100%; background: white;
   color: var(--text-sub); font-family: inherit; font-size: 13px;
@@ -216,6 +215,7 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
     <div class="counter-num"><span id="cnt">0</span><small> / 16</small></div>
   </div>
 
+  <!-- 01 今の体力・気力 -->
   <div class="sec">
     <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">今の体力・気力</div></div>
     <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">レッスン前日に「明日か…」とため息が出ることがある</span></label>
@@ -224,6 +224,7 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
     <label class="item"><input type="checkbox" data-s="0"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「このペースであと5年続けられるか」正直自信がない</span></label>
   </div>
 
+  <!-- 02 生徒が増えているのに楽にならない -->
   <div class="sec">
     <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">生徒が増えているのに楽にならない</div></div>
     <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">生徒数は増えたのに、手元に残るお金の感覚がない</span></label>
@@ -232,19 +233,21 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
     <label class="item"><input type="checkbox" data-s="1"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「頑張れば回る」が続いているだけで、余裕が生まれていない</span></label>
   </div>
 
+  <!-- 03 止まっているポイント（Q3・Q4変更） -->
   <div class="sec">
     <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">止まっているポイント</div></div>
     <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「変えなきゃ」と思いながら、何から手をつければいいか分からない</span></label>
     <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">誰かに相談したいけど、教室経営を分かってくれる人が周りにいない</span></label>
-    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「まだ大丈夫」と思いながら、気づけば1年が過ぎていた</span></label>
-    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">自分で考えて、調べて、結局そのまま…を繰り返している</span></label>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">「後でやろう」と思ったことが、気づけば1年以上そのままになっている</span></label>
+    <label class="item"><input type="checkbox" data-s="2"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">うまくいっている教室と自分の教室の違いが、正直よく分からない</span></label>
   </div>
 
+  <!-- 04 これからへの不安（Q2・Q3変更） -->
   <div class="sec">
     <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">これからへの不安</div></div>
     <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">人に任せたいけど「どうせ自分がやった方が早い」と思ってしまう</span></label>
-    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">拡大・採用・テナントを考えたことはあるが、判断できずにいる</span></label>
-    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">半年後・1年後の自分の働き方が、具体的にイメージできない</span></label>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">講師を増やす・テナントを借りる・やめる、どれが正解か判断できない</span></label>
+    <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">自分の教室が「このままでいいのか」、答えが出ないまま時間だけ過ぎている</span></label>
     <label class="item"><input type="checkbox" data-s="3"><div class="box"><svg width="12" height="9" viewBox="0 0 12 9"><path d="M1 4.5l3 3L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="txt">家族との時間や自分の余裕を、ずっと「後回し」にしてきた</span></label>
   </div>
 
@@ -253,6 +256,7 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
   </div>
 </div>
 
+<!-- 結果画面 -->
 <div id="result">
   <div class="header">
     <div class="badge">診断結果</div>
@@ -276,30 +280,23 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
     <div class="cat"><span class="cat-lbl">楽にならない</span><div class="cat-bg"><div class="cat-fill" id="b1"></div></div><span class="cat-cnt" id="c1"></span></div>
     <div class="cat"><span class="cat-lbl">止まっているポイント</span><div class="cat-bg"><div class="cat-fill" id="b2"></div></div><span class="cat-cnt" id="c2"></span></div>
     <div class="cat"><span class="cat-lbl">これからへの不安</span><div class="cat-bg"><div class="cat-fill" id="b3"></div></div><span class="cat-cnt" id="c3"></span></div>
+    <!-- 詰まりポイントブロック -->
+    <div class="bottleneck" id="r-bottleneck">
+      <div class="bottleneck-title" id="r-bottleneck-title"></div>
+      <div class="bottleneck-msg" id="r-bottleneck-msg"></div>
+    </div>
   </div>
 
   <div class="kooza-img-wrap">
-    <img src="講座案内.jpg" alt="教室のこれからを考える整理講座 案内">
+    <img src="kooza_annai.png" alt="教室のこれからを考える整理講座 案内">
     <div class="kooza-img-caption">📖 講座の詳細はこちら（画像をタップで拡大できます）</div>
   </div>
 
   <div class="cta-wrap">
-    <h3>どちらから始めますか？</h3>
+    <h3>30分で、出口が見えてきます。</h3>
     <p class="cta-lead" id="r-cta-lead"></p>
-    <div class="cta-grid">
-      <a href="https://lin.ee/rxtxCmE" class="cta-card outline">
-        <span class="cta-icon">📖</span>
-        <span class="cta-label">見直し講座へ<br>申込む</span>
-        <span class="cta-desc">まず現状を整理したい方へ。無理に決断しなくていい90分。</span>
-        <span class="cta-btn-inner">LINEで申込む →</span>
-      </a>
-      <a href="https://lin.ee/rxtxCmE" class="cta-card fill">
-        <span class="cta-icon">🤝</span>
-        <span class="cta-label">個別相談へ<br>申込む</span>
-        <span class="cta-desc">一緒に走り出したい方へ。伴走型コンサルのご相談。</span>
-        <span class="cta-btn-inner">LINEで申込む →</span>
-      </a>
-    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_iKJwGV9dlhMPNo7LMpvtGen845-ppHY9iuvJyNBOROWO2w/viewform" class="purchase-btn" target="_blank">🎬 30分で答えを見つける（3,000円）</a>
+    <p class="purchase-note">ワークシート付き・何度でも視聴OK・購入後すぐ視聴できます</p>
   </div>
 
   <button class="reset-btn" onclick="resetForm()">🔄 もう一度チェックする</button>
@@ -311,27 +308,46 @@ label.item input:checked ~ .txt { color: var(--pink-dark); font-weight: 500; }
 const DATA = [
   {
     min: 0, max: 4, img: 'lv1.png', level: '✨ 安定期',
-    title: '今は比較的余裕があります',
-    msg: '今のところ大きな無理はなさそうです。\n余裕があるうちに少しずつ仕組みを整えておくのが\n長く続く教室の秘訣。\n今が「整えどき」を先取りするチャンスです。',
-    lead: '余裕があるうちに動ける今がチャンスです。\nまず現状を整理したい方は見直し講座から、\nもう一緒に走り出したい方は個別相談へどうぞ。'
+    title: '今が一番、整えやすいときです。',
+    msg: '余裕があるうちに動ける人は、実はとても少ない。\nほとんどの先生は「もう少し落ち着いたら」と思いながら、\n気づけば限界になってから動き始めます。\n今のあなたには、まだ選べる余地があります。',
+    lead: '今の余裕を、仕組みに変えませんか。\n30分で、5年後が変わります。'
   },
   {
     min: 5, max: 8, img: 'lv2.png', level: '⚠️ 要注意',
-    title: 'そろそろ整えどきかもしれません',
-    msg: 'じわじわと負担が積み重なっているサインです。\n「まだ大丈夫」と思いながら\n気づけば限界になることもあります。\nモヤモヤが出てきた今が、動くタイミングです。',
-    lead: '「変えなきゃとは思ってるけど、何から？」\nそのモヤモヤを整理したい方は見直し講座から。\n動き出す覚悟ができている方は個別相談へどうぞ。'
+    title: '「まだ大丈夫」が一番危ないって、知っていましたか？',
+    msg: 'しんどさって、ある日突然くるんじゃないんです。\nじわじわと、気づかないうちに積み重なっていく。\n今感じているそのモヤモヤは、\n体と心がくれている、小さなサインかもしれません。',
+    lead: 'そのモヤモヤに、名前をつけませんか。\n原因が分かれば、動けます。'
   },
   {
     min: 9, max: 12, img: 'lv3.png', level: '🔴 要整理',
-    title: 'かなり無理をしています',
-    msg: '体力も気力も、じわじわと削られている状態です。\nこのまま続けても楽にはなりません。\n今こそ一度立ち止まって\n教室の状態を整理することが必要なタイミングです。',
-    lead: '一人で抱えなくていいんです。\nまず現状を整理したい方は見直し講座から、\nすぐに伴走してほしい方は個別相談へどうぞ。'
+    title: 'あなたは十分、頑張ってきました。',
+    msg: 'こんなにチェックが入るくらい、ずっと無理をしてきたんですね。\n頑張り続けられたのは、それだけ教室を大切にしてきたから。\nでも、そろそろ「頑張る」以外の方法を\n持ってもいい頃だと思います。',
+    lead: '「頑張る」以外の方法が、あります。\n30分で、出口を見つけましょう。'
   },
   {
     min: 13, max: 16, img: 'lv4.png', level: '🆘 緊急サポート必要',
-    title: '今すぐ助けが必要です',
-    msg: '限界に近い状態かもしれません。\nあなたが倒れてしまったら、生徒も困ります。\n自分を守ることも、大切な仕事のひとつです。\nどうか一人で抱え込まないでください。',
-    lead: '今が動くタイミングです。\n一緒に走り出したい方は個別相談へ、\nまずは話を整理したい方は見直し講座からどうぞ。'
+    title: '読みながら、少し泣きそうになりませんでしたか。',
+    msg: '全部当てはまった方は、きっとずっとずっと\n一人で抱えてきたんだと思います。\n誰にも言えなかったこと、「弱音を吐いたら負け」って\n思ってきたこと。\nもう十分です。次は一人じゃなくていい。',
+    lead: '一人で考えるのを、今日やめませんか。\n次の一歩は、思っているより小さい。'
+  }
+];
+
+const BOTTLENECK = [
+  {
+    name: '今の体力・気力',
+    msg: 'まず、あなた自身を守ることが最優先です。\n教室の仕組みより先に、あなたのペースを取り戻す必要があります。'
+  },
+  {
+    name: '生徒が増えているのに楽にならない',
+    msg: '頑張っているのに報われない状態です。\n問題は量ではなく、教室の構造にあります。'
+  },
+  {
+    name: '止まっているポイント',
+    msg: '分かっているのに動けない。\nそれは意志が弱いからじゃなく、正しい地図がないからです。'
+  },
+  {
+    name: 'これからへの不安',
+    msg: '方向性が見えないまま走り続けている状態です。\nまず「どこへ向かうか」を決める必要があります。'
   }
 ];
 
@@ -350,6 +366,7 @@ function showResult() {
   cbs.forEach(c => { if (c.checked) sec[+c.dataset.s]++; });
   const d = DATA.find(x => total >= x.min && total <= x.max);
 
+  // 基本結果
   document.getElementById('r-score').textContent = total;
   document.getElementById('r-level').textContent = d.level;
   document.getElementById('r-title').textContent = d.title;
@@ -357,10 +374,32 @@ function showResult() {
   document.getElementById('r-cta-lead').textContent = d.lead;
   document.getElementById('r-fig').innerHTML = `<img src="${d.img}" alt="${d.level}">`;
 
+  // カテゴリバー
   sec.forEach((v, i) => {
     document.getElementById('b' + i).style.width = (v / 4 * 100) + '%';
     document.getElementById('c' + i).textContent = v + '/4';
   });
+
+  // 詰まりポイント
+  const maxSec = Math.max(...sec);
+  const bottleneckEl = document.getElementById('r-bottleneck');
+  if (maxSec > 0) {
+    const tops = sec.reduce((arr, v, i) => v === maxSec ? [...arr, i] : arr, []);
+    let titleText, msgText;
+    if (tops.length === 1) {
+      titleText = `あなたの一番の詰まりポイントは「${BOTTLENECK[tops[0]].name}」です`;
+      msgText = BOTTLENECK[tops[0]].msg;
+    } else {
+      const names = tops.map(i => BOTTLENECK[i].name).join('と');
+      titleText = `「${names}」、両方が詰まっています`;
+      msgText = tops.map(i => BOTTLENECK[i].msg).join('\n\n');
+    }
+    document.getElementById('r-bottleneck-title').textContent = titleText;
+    document.getElementById('r-bottleneck-msg').textContent = msgText;
+    bottleneckEl.style.display = 'block';
+  } else {
+    bottleneckEl.style.display = 'none';
+  }
 
   document.getElementById('form').style.display = 'none';
   const r = document.getElementById('result');
